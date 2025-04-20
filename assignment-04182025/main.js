@@ -314,15 +314,7 @@ console.log("p14:", p14); // [25, 10, 10, 1]
 from the user and display the result.
 */
 
-/* **************** requires a browser to run prompt **************** */
-// function getExponent() {
-//   const b = prompt("Enter the base:");
-//   const n = prompt("Enter the exponent:");
-//   return Math.pow(b, n);
-// }
-// const p15 = getExponent();
-// console.log("p15:", p15);
-/* **************************************************************** */
+// skip
 
 // ============================================================================ //
 
