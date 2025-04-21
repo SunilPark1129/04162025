@@ -504,6 +504,11 @@ console.log("p23:", p23); // e
 
 /*
 24. Write a JavaScript function to apply Bubble Sort algorithm.
+Note : According to wikipedia "Bubble sort, sometimes referred to as sinking sort, is a simple sorting algorithm that
+works by repeatedly stepping through the list to be sorted, comparing each pair of adjacent items and swapping them if
+they are in the wrong order".
+Sample array : [12, 345, 4, 546, 122, 84, 98, 64, 9, 1, 3223, 455, 23, 234, 213]
+Expected output : [3223, 546, 455, 345, 234, 213, 122, 98, 84, 64, 23, 12, 9, 4, 1]
 */
 
 function bubbleSort(arr) {
@@ -513,7 +518,7 @@ function bubbleSort(arr) {
 
     for (let j = 0; j < arr.length - 1 - i; j++) {
       // if next index is smaller than the current index item
-      if (arr[j] > arr[j + 1]) {
+      if (arr[j] < arr[j + 1]) {
         [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]];
         hasSwapped = true;
       }
@@ -526,5 +531,143 @@ function bubbleSort(arr) {
 
   return arr;
 }
-const p24 = bubbleSort([4, 3, 6, 2, 8, 1]);
-console.log("p24:", p24); // [1, 2, 3, 4, 6, 8]
+const p24 = bubbleSort([
+  12, 345, 4, 546, 122, 84, 98, 64, 9, 1, 3223, 455, 23, 234, 213,
+]);
+console.log("p24:", p24); // [3223, 546, 455, 345, 234, 213, 122, 98, 84, 64, 23, 12, 9, 4, 1]
+
+// ============================================================================ //
+
+/*
+25. Write a JavaScript function that accept a list of country names as input and returns the longest country name as
+output.
+Sample function : Longest_Country_Name(["Australia", "Germany", "United States of America"])
+Expected output : "United States of America"
+*/
+
+function Longest_Country_Name(arr) {
+  return arr.reduce((a, b) => (a.length > b.length ? a : b));
+}
+const p25 = Longest_Country_Name([
+  "Australia",
+  "Germany",
+  "United States of America",
+]);
+console.log("p25:", p25);
+
+// ============================================================================ //
+
+/*
+26. Write a JavaScript function to find longest substring in a given a string without repeating characters.
+*/
+function Find_Longest_String(str) {
+  let longest = "";
+  let s = "";
+  let obj = {};
+
+  for (let i = 0; i < str.length; i++) {
+    // if the longest string is bigger than the remained length -> break
+    if (str.length - i < longest.length) break;
+    const curr = str[i];
+
+    // if duplicated character -> break
+    if (obj[curr]) {
+      // replace the longest string
+      if (longest.length < s.length) longest = s;
+
+      // start the next loop after the index of the last duplicated
+      let index = s.lastIndexOf(curr);
+      if (index === 0) index++;
+      s = "";
+      obj = {};
+      i = i - 2 + index;
+      continue;
+    }
+
+    // add
+    obj[curr] = true;
+    s += curr;
+  }
+
+  // check last string
+  if (longest.length < s.length) longest = s;
+
+  return longest;
+}
+const p26 = Find_Longest_String("aabcbacescz");
+console.log("p26:", p26); // baces
+
+// ============================================================================ //
+
+/*
+27. Write a JavaScript function that returns the longest palindrome in a given string.
+Note: According to Wikipedia "In computer science, the longest palindromic substring or longest symmetric factor
+problem is the problem of finding a maximum-length contiguous substring of a given string that is also a palindrome. For
+example, the longest palindromic substring of "bananas" is "anana". The longest palindromic substring is not guaranteed
+to be unique; for example, in the string "abracadabra", there is no palindromic substring with length greater than three,
+but there are two palindromic substrings with length three, namely, "aca" and "ada".
+In some applications it may be necessary to return all maximal palindromic substrings (that is, all substrings that are
+themselves palindromes and cannot be extended to larger palindromic substrings) rather than returning only one
+substring or returning the maximum length of a palindromic substring.
+*/
+function Find_Longest_Palindrome(s) {
+  let longest = "";
+
+  // function to find the palindrome
+  function getPalindrome(i, isEvenNumber) {
+    let left = isEvenNumber ? i : i - 1;
+    let right = i + 1;
+    let current = isEvenNumber ? "" : s[i];
+    let reversed = isEvenNumber ? "" : s[i];
+
+    // expand from the center until find a palindrom
+    while (left >= 0 && right <= s.length - 1) {
+      // check two chars if equal
+      current = s[left] + current + s[right];
+      reversed = s[right] + reversed + s[left];
+      if (current !== reversed) break;
+
+      left--;
+      right++;
+
+      // replace record
+      if (longest.length < current.length) longest = current;
+    }
+  }
+
+  for (let i = 0; i < s.length; i++) {
+    getPalindrome(i, true);
+    getPalindrome(i, false);
+  }
+
+  if (longest.length === 0) return s[0];
+  return longest;
+}
+const p27 = Find_Longest_Palindrome("abracadabra");
+console.log("p27:", p27);
+
+// ============================================================================ //
+
+/*
+28. Write a JavaScript program to pass a 'JavaScript function' as parameter.
+*/
+function greeting() {
+  return "Sunil";
+}
+function Pass_Function(cb) {
+  return cb() + " " + "Park";
+}
+const p28 = Pass_Function(greeting);
+console.log("p28:", p28); // Sunil Park
+
+// ============================================================================ //
+
+/*
+29. Write a JavaScript function to get the function name.
+*/
+function printFunction() {}
+function getFunctionName(cb) {
+  return cb.name;
+}
+const p29 = getFunctionName(printFunction);
+console.log("p29:", p29); // printFunction
