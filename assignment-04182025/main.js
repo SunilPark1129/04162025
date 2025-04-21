@@ -66,22 +66,20 @@ Assume punctuation and numbers symbols are not included in the passed string.
 */
 
 function getAlphabeticalOrder(str) {
-  const map = new Map();
   const firstLetter = "a".charCodeAt(0);
+  const letters = new Array(26).fill().map(() => []);
   let result = "";
 
-  // setup map
+  // set up matrix
   for (let c of str) {
-    if (map.has(c)) {
-      map.set(c, map.get(c) + 1);
-    } else map.set(c, 1);
+    const index = c.charCodeAt(0) - firstLetter;
+    letters[index].push(c);
   }
 
-  // check all alphabets from a to z
-  for (let i = 0; i < 26; i++) {
-    const currChar = String.fromCharCode(firstLetter + i);
-    // add the character to the result string if it's in the map
-    if (map.has(currChar)) result += currChar.repeat(map.get(currChar));
+  // place string in order
+  for (let arr of letters) {
+    if (arr.length === 0) continue;
+    result += arr[0].repeat(arr.length);
   }
 
   return result;
