@@ -91,17 +91,11 @@ console.log(p5); // 4
 
 arr.__proto__.mySlice = function (a, b) {
   let r = [];
-
   let left = a,
     right = b || this.length;
 
-  // calculate negative starting number
-  if (left < 0) {
-    if (Math.abs(left) > this.length) left = 0;
-    else left = this.length + left;
-  }
-
-  // calculate negative ending number
+  // reassign if first and second index items have negative value
+  if (left < 0) left = Math.max(0, this.length + left);
   if (right < 0) right = this.length + right;
 
   for (let i = left; i < Math.min(right, this.length); i++) {
@@ -109,7 +103,7 @@ arr.__proto__.mySlice = function (a, b) {
   }
   return r;
 };
-const p6 = arr.mySlice(-2, 5);
-console.log(p6); // [4, 5]
+const p6 = arr.mySlice(1, 3);
+console.log(p6); // [2, 3]
 
 /*==================================================================*/
