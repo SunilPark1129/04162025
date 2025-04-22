@@ -91,12 +91,25 @@ console.log(p5); // 4
 
 arr.__proto__.mySlice = function (a, b) {
   let r = [];
-  for (let i = a; i < Math.min(b, this.length); i++) {
+
+  let left = a,
+    right = b || this.length;
+
+  // calculate negative starting number
+  if (left < 0) {
+    if (Math.abs(left) > this.length) left = 0;
+    else left = this.length + left;
+  }
+
+  // calculate negative ending number
+  if (right < 0) right = this.length + right;
+
+  for (let i = left; i < Math.min(right, this.length); i++) {
     r.push(this[i]);
   }
   return r;
 };
-const p6 = arr.mySlice(2, 7);
-console.log(p6); // [3, 4, 5];
+const p6 = arr.mySlice(-2, 5);
+console.log(p6); // [4, 5]
 
 /*==================================================================*/
