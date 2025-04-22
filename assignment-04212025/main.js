@@ -28,9 +28,7 @@ console.log(p1); // [3, 4, 5, 6, 7]
 arr.__proto__.myFilter = function (cb) {
   const r = [];
   for (let i = 0; i < this.length; i++) {
-    if (cb(this[i], i, this)) {
-      r.push(this[i]);
-    }
+    if (cb(this[i], i, this)) r.push(this[i]);
   }
   return r;
 };
@@ -44,14 +42,12 @@ console.log(p2); // [1, 2]
 // reduce
 
 arr.__proto__.myReduce = function (cb, initialValue) {
-  const temp = [...arr];
   // if parameter has second argument
-  if (initialValue) temp.unshift(initialValue);
-  // r => first item
-  let r = temp[0];
+  let i = initialValue ? 0 : 1;
+  let r = initialValue || this[0];
 
-  for (let i = 1; i < temp.length; i++) {
-    r = cb(r, this[i]);
+  for (i; i < this.length; i++) {
+    r = cb(r, this[i], i, this);
   }
   return r;
 };
