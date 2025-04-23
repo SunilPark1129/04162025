@@ -31,6 +31,8 @@ async function getRequest(path) {
 
 /*==================================================*/
 
+// returns all resolved values
+// fails if any promise is rejected
 function promiseAll() {
   return Promise.all([
     getRequest("pikachu"),
@@ -38,7 +40,6 @@ function promiseAll() {
     getRequest("butterfree"),
   ]);
 }
-
 /*
 return:
 [
@@ -50,6 +51,7 @@ return:
 
 /*==================================================*/
 
+// returns resolved values and rejected values
 function promiseAllSettled() {
   return Promise.allSettled([
     getRequest("zubat"),
@@ -57,7 +59,6 @@ function promiseAllSettled() {
     getRequest("caterpie"),
   ]);
 }
-
 /*
 return:
 [
@@ -69,6 +70,8 @@ return:
 
 /*==================================================*/
 
+// returns first resolved value
+// Fails if any promise is rejected
 function promiseRace() {
   return Promise.race([
     getRequest("oddish"),
@@ -76,7 +79,6 @@ function promiseRace() {
     getRequest("arbok"),
   ]);
 }
-
 /*
 return:
 { name: 'oddish', id: 25 }
@@ -88,6 +90,7 @@ return:
 
 /*==================================================*/
 
+// returns first resolved value
 function promiseAny() {
   return Promise.any([
     getRequest(),
@@ -95,7 +98,6 @@ function promiseAny() {
     getRequest("meowth"),
   ]);
 }
-
 /*
 return:
 { name: 'psyduck', id: 54 }
